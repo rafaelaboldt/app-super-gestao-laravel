@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  php74:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app-super-gestao-laravel
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    ports:
+      - "8000:8000"
+    tty: true
