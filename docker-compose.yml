@@ -12,3 +12,31 @@ services:
     ports:
       - "8000:8000"
     tty: true
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-laravel
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sg
+    ports:
+      - "3307:3306" # ⚠️ Porta externa 3307 para evitar conflito com MySQL do Windows
+    volumes:
+      - db-data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma-laravel
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+    depends_on:
+      - mysql
+
+volumes:
+  db-data:
